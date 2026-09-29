@@ -164,7 +164,9 @@ function createDOMShellOnce() {
     <!-- 1. Header -->
     <header>
       <div class="brand-wrap">
-        <div class="brand-icon">🍃</div>
+        <div class="brand-icon">
+          <img src="/vayunet-logo.png" alt="VayuNet" class="brand-logo-img">
+        </div>
         <div class="brand-text">
           <h1 id="txtAppTitle">VayuNet</h1>
           <p id="txtTagline">Clean Air Intelligence</p>
