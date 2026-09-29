@@ -37,10 +37,7 @@ services:
     autoDeploy: true
     envVars:
       - key: VITE_API_URL
-        fromService:
-          type: web
-          name: vayunet-api
-          property: url
+        sync: false
     routes:
       - type: rewrite
         source: /*
