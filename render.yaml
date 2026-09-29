@@ -1,0 +1,47 @@
+services:
+  # 1. FastAPI Public Backend Web Service
+  - type: web
+    name: vayunet-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: VAYUNET_DEMO_MODE
+        value: "true"
+      - key: ANALYSIS_RADIUS_KM
+        value: "15"
+      - key: GEE_LOOKBACK_DAYS
+        value: "7"
+      - key: OPEN_METEO_URL
+        value: https://api.open-meteo.com/v1/forecast
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      - key: GEE_PROJECT_ID
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+
+  # 2. VayuNet Mobile PWA Static Frontend
+  - type: web
+    name: vayunet-app
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: vayunet-api
+          property: url
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

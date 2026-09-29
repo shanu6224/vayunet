@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#071519"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Brand Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🍃 VayuNet"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hyper-Local Pollution Intelligence &amp; Climate Resilience"
+            android:textColor="#14B8A6"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginTop="2dp" />
+
+        <!-- API Server Configuration Section (No hardcoded localhost) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#0C2027"
+            android:padding="14dp"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Backend API Base URL"
+                android:textColor="#99F6E4"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="For physical phone Wi-Fi testing, enter laptop IP (e.g. http://192.168.1.9:8000). Emulator uses http://10.0.2.2:8000."
+                android:textColor="#64748B"
+                android:textSize="10sp"
+                android:layout_marginTop="2dp" />
+
+            <EditText
+                android:id="@+id/editApiUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#F0FDFA"
+                android:textColorHint="#475569"
+                android:textSize="14sp"
+                android:background="#16313A"
+                android:padding="10dp"
+                android:layout_marginTop="8dp"
+                android:singleLine="true"
+                android:inputType="textUri"
+                android:hint="http://192.168.1.9:8000" />
+
+            <Button
+                android:id="@+id/btnSaveApi"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Save API URL"
+                android:textSize="12sp"
+                android:backgroundTint="#0D9488"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="6dp" />
+        </LinearLayout>
+
+        <!-- Live GPS & Surrounding Area Action -->
+        <Button
+            android:id="@+id/btnCheckLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📍 Check Surrounding Pollution"
+            android:backgroundTint="#14B8A6"
+            android:textColor="#042F2E"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/txtLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📍 Your Location: Detecting..."
+            android:textColor="#CBD5E1"
+            android:textSize="12sp"
+            android:layout_marginTop="6dp" />
+
+        <!-- Real Analysis Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#0E2229"
+            android:padding="16dp"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Checking nearby pollution..."
+                android:textColor="#F0FDFA"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtHotspot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pollution hotspot: Analyzing..."
+                android:textColor="#FBBF24"
+                android:textSize="13sp"
+                android:layout_marginTop="6dp" />
+
+            <TextView
+                android:id="@+id/txtMovement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Movement: Analyzing..."
+                android:textColor="#94A3B8"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/txtAdvice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Advisory: Please wait..."
+                android:textColor="#E2E8F0"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginTop="6dp" />
+
+            <TextView
+                android:id="@+id/details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Native Android AppWidget and notification channel active."
+                android:textColor="#64748B"
+                android:textSize="11sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <Button
+            android:id="@+id/btnOpenPwa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🗺️ Open Interactive PWA Map"
+            android:backgroundTint="#0F766E"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btnTestAlert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⚠️ Test Native Alert Notification"
+            android:backgroundTint="#16313A"
+            android:textColor="#F0FDFA"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/btnUpdateWidget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🔄 Refresh Home-Screen Widget"
+            android:backgroundTint="#16313A"
+            android:textColor="#F0FDFA"
+            android:layout_marginTop="10dp" />
+
+        <!-- Help Notice -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="To place the VayuNet widget: Long-press your phone's home screen, tap 'Widgets', choose 'VayuNet', and drag to your home screen."
+            android:textColor="#64748B"
+            android:textSize="11sp"
+            android:layout_marginTop="18dp"
+            android:lineSpacingExtra="3dp" />
+    </LinearLayout>
+</ScrollView>

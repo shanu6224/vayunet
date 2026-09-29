@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="14dp"
+    android:background="#071519">
+
+    <!-- Header Row: Title & Updated Time -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/widgetTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="VayuNet"
+            android:textColor="#14B8A6"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/widgetTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Updated: 6:40 PM"
+            android:textColor="#94A3B8"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- Air Risk Status Banner -->
+    <TextView
+        android:id="@+id/widgetStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="🔴 HIGH RISK"
+        android:textColor="#EF4444"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- Message / Movement -->
+    <TextView
+        android:id="@+id/widgetMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="Pollution may move toward you."
+        android:textColor="#F0FDFA"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <!-- Wind Row -->
+    <TextView
+        android:id="@+id/widgetWind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Wind: SE"
+        android:textColor="#94A3B8"
+        android:textSize="11sp" />
+</LinearLayout>
