@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="14dp"
-    android:background="#071519">
+    android:padding="12dp"
+    android:background="@drawable/widget_bg_safe">
 
     <!-- Header Row: Title & Updated Time -->
     <LinearLayout

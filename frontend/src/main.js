@@ -44,6 +44,8 @@ const I18N = {
     affectedTitle: "Potentially affected area",
     userMayBeAffected: "Pollution may affect your area.",
     userNotAffected: "Your area is not currently in the direct downwind path.",
+    downwindUnavailable: "Downwind analysis unavailable",
+    downwindUnavailableSub: "Wind data is currently unavailable, so pollution movement and affected-area estimation cannot be determined.",
     whatToDoTitle: "What you should do",
     prioritySitesTitle: "Places to verify (Downwind)",
     lastUpdated: "Last updated",
@@ -67,7 +69,32 @@ const I18N = {
     widgetTitle: "Android Home-Screen Widget Preview",
     alertBtnLabel: "Enable Alert Sound & Notifications",
     alertBtnActive: "Alerts & Notifications Active ✓",
-    disclaimer: "Scientific Notice: VayuNet provides decision-support and awareness using satellite atmospheric columns and weather models. It does not replace official government pollution advisories."
+    disclaimer: "Scientific Notice: VayuNet provides decision-support and awareness using satellite atmospheric columns and weather models. It does not replace official government pollution advisories.",
+    reportBtn: "📸 Report Visible Pollution",
+    reportTitle: "Citizen Pollution Observation",
+    reportSub: "Take or upload a photo of visible smoke, haze, or emissions. Your current GPS coordinates will be attached automatically.",
+    photoLabel: "Photo (Citizen Evidence)",
+    takePhotoBtn: "Take / Choose Photo",
+    photoSelected: "Photo ready for assessment",
+    coordsAttached: "📍 GPS Coordinates Attached",
+    categoryLabel: "Pollution Category",
+    catSmoke: "Smoke / Heavy Haze",
+    catFire: "Agricultural / Waste Fire",
+    catIndustrial: "Industrial / Factory Plume",
+    catDust: "Dust / Construction Plume",
+    catOther: "Other Visible Pollution",
+    descLabel: "Short Description (Optional)",
+    descPlaceholder: "e.g. Heavy black smoke from open burning near highway...",
+    submitObservation: "Submit Citizen Evidence",
+    submitting: "Analyzing & Submitting…",
+    observationNotice: "Notice: Citizen photos serve as qualitative ground evidence. They do not measure chemical gas concentrations (NO₂/SO₂).",
+    legendCitizen: "🟣 Purple = Citizen Observation",
+    citizenObsTitle: "CITIZEN POLLUTION OBSERVATIONS",
+    noCitizenObs: "No citizen observations recorded within 15 km yet.",
+    recentObsSubtitle: "Recent community visual reports within 15 km",
+    viewPhoto: "View Photo Evidence",
+    aiAssessmentLabel: "AI Visual Assessment",
+    groundVerificationReq: "Requires Ground Verification"
   },
   ta: {
     appTitle: "வாயுநெட்",
@@ -108,6 +135,8 @@ const I18N = {
     affectedTitle: "பாதிக்கப்படக்கூடிய பகுதி",
     userMayBeAffected: "காற்று செல்லும் பாதையில் உங்கள் பகுதி அமைய வாய்ப்புள்ளது.",
     userNotAffected: "உங்கள் பகுதி காற்று செல்லும் நேரடிப் பாதையில் இல்லை.",
+    downwindUnavailable: "காற்றுப் பாதை பகுப்பாய்வு கிடைக்கவில்லை",
+    downwindUnavailableSub: "காற்றின் தகவல் தற்போது கிடைக்காததால், மாசு நகர்வு மற்றும் பாதிக்கப்படக்கூடிய பகுதியை கணிக்க இயலவில்லை.",
     whatToDoTitle: "நீங்கள் என்ன செய்ய வேண்டும்?",
     prioritySitesTitle: "சரிபார்க்க வேண்டிய இடங்கள்",
     lastUpdated: "கடைசியாக புதுப்பிக்கப்பட்டது",
@@ -131,7 +160,32 @@ const I18N = {
     widgetTitle: "ஆண்ட்ராய்டு விட்ஜெட் முன்னோட்டம்",
     alertBtnLabel: "ஒலி மற்றும் அறிவிப்புகளை இயக்கவும்",
     alertBtnActive: "அறிவிப்புகள் இயக்கப்பட்டுள்ளன ✓",
-    disclaimer: "அறிவிப்பு: வாயுநெட் பொது விழிப்புணர்வு மற்றும் வழிகாட்டுதலுக்காக மட்டுமே. இது அரசு அதிகாரப்பூர்வ எச்சரிக்கைகளுக்கு மாற்றாகாது."
+    disclaimer: "அறிவிப்பு: வாயுநெட் பொது விழிப்புணர்வு மற்றும் வழிகாட்டுதலுக்காக மட்டுமே. இது அரசு அதிகாரப்பூர்வ எச்சரிக்கைகளுக்கு மாற்றாகாது.",
+    reportBtn: "📸 காற்று மாசை பதிவு செய்",
+    reportTitle: "பொதுமக்கள் காற்று மாசு பதிவு",
+    reportSub: "புகை, புழுதி அல்லது மாசின் புகைப்படத்தை பதிவேற்றவும். உங்கள் ஜிபிஎஸ் தானாக இணைக்கப்படும்.",
+    photoLabel: "புகைப்படம் (ஆதாரம்)",
+    takePhotoBtn: "புகைப்படம் எடு / தேர்வு செய்",
+    photoSelected: "புகைப்படம் தயாராக உள்ளது",
+    coordsAttached: "📍 ஜிபிஎஸ் இணைக்கப்பட்டது",
+    categoryLabel: "மாசு வகை",
+    catSmoke: "புகை / அடர் மூடுபனி",
+    catFire: "விவசாய / குப்பை எரிப்பு",
+    catIndustrial: "தொழிற்சாலை புகை",
+    catDust: "புழுதி / கட்டுமான தூசு",
+    catOther: "மற்றவை",
+    descLabel: "விவரம் (விருப்பத்தேர்வு)",
+    descPlaceholder: "எ.கா. சாலையோரத்தில் எரிக்கப்படும் கழிவுகளிலிருந்து வரும் புகை...",
+    submitObservation: "பதிவை சமர்ப்பிக்கவும்",
+    submitting: "ஆய்வு செய்து சமர்ப்பிக்கிறது…",
+    observationNotice: "அறிவிப்பு: பொதுமக்கள் புகைப்படங்கள் நேரடி பார்வைக் கள ஆதாரமாக மட்டுமே பயன்படும்; வாயு அளவீடுகள் அல்ல.",
+    legendCitizen: "🟣 ஊதா = பொதுமக்கள் நேரடி பதிவு",
+    citizenObsTitle: "பொதுமக்கள் நேரடி பதிவுகள்",
+    noCitizenObs: "15 கி.மீ சுற்றளவில் பொதுமக்கள் பதிவுகள் எதுவும் இல்லை.",
+    recentObsSubtitle: "அருகிலுள்ள பொதுமக்கள் பார்வை ஆதாரங்கள் (15 கி.மீ)",
+    viewPhoto: "புகைப்பட ஆதாரத்தைப் பார்க்கவும்",
+    aiAssessmentLabel: "AI காட்சி மதிப்பீடு",
+    groundVerificationReq: "கள ஆய்வு தேவை"
   }
 };
 
@@ -149,6 +203,9 @@ let corridorLayer = null;
 let affectedLayer = null;
 let movementPathLayer = null;
 let sensitiveMarkers = [];
+let citizenMarkers = [];
+let selectedCitizenCategory = "smoke_haze";
+let currentPhotoBase64 = null;
 let currentLat = null;
 let currentLon = null;
 let lastAnalysisData = null;
@@ -204,6 +261,77 @@ function createDOMShellOnce() {
       </div>
     </section>
 
+    <!-- 2b. Report Visible Pollution (Citizen Observation) Quick Action -->
+    <div class="citizen-action-wrap">
+      <button id="btnOpenCitizenReport" class="btn-report-action" type="button">
+        <span>📸</span>
+        <span id="txtReportBtn">Report Visible Pollution</span>
+      </button>
+    </div>
+
+    <!-- Citizen Observation Submission Form (Collapsible) -->
+    <section id="citizenReportSection" class="citizen-report-section hidden">
+      <div class="citizen-report-header">
+        <div class="citizen-report-title">
+          <span>📸</span>
+          <span id="txtReportTitle">Citizen Pollution Observation</span>
+        </div>
+        <button id="btnCloseCitizenReport" class="btn-close-form" type="button" title="Close">✕</button>
+      </div>
+      <p id="txtReportSub" class="citizen-report-sub">
+        Take or upload a photo of visible smoke, haze, or emissions. Your current GPS coordinates will be attached automatically.
+      </p>
+
+      <!-- Photo Picker Box -->
+      <div id="photoDropArea" class="photo-upload-box">
+        <input type="file" id="citizenPhotoInput" accept="image/*" capture="environment" style="display: none;" />
+        <div class="upload-icon">📷</div>
+        <div id="txtUploadPrompt" class="upload-prompt">Tap to Take or Upload Photo</div>
+        <div class="upload-hint">Smoke plume, crop burning, factory emission, or dust</div>
+      </div>
+
+      <div id="photoPreviewWrap" class="photo-preview-container hidden">
+        <img id="citizenPhotoPreview" class="photo-preview-img" alt="Preview" />
+        <button id="btnRemovePhoto" class="btn-remove-photo" type="button" title="Remove photo">✕</button>
+      </div>
+
+      <!-- Attached GPS Badge -->
+      <div class="attached-gps-badge">
+        <span>📍</span>
+        <span id="txtAttachedGps">GPS: Awaiting device location fix...</span>
+      </div>
+
+      <!-- Category Picker -->
+      <div class="category-picker-label" id="txtCategoryLabel">Pollution Category</div>
+      <div class="category-grid" id="categoryGrid">
+        <button type="button" class="category-chip active" data-cat="smoke_haze">🌫️ <span id="txtCatSmoke">Smoke / Heavy Haze</span></button>
+        <button type="button" class="category-chip" data-cat="agricultural_fire">🔥 <span id="txtCatFire">Agricultural / Waste Fire</span></button>
+        <button type="button" class="category-chip" data-cat="industrial_emission">🏭 <span id="txtCatIndustrial">Industrial / Factory Plume</span></button>
+        <button type="button" class="category-chip" data-cat="dust">💨 <span id="txtCatDust">Dust / Construction Plume</span></button>
+      </div>
+
+      <!-- Optional Short Description -->
+      <textarea id="citizenDescription" class="desc-textarea" placeholder="Short description (e.g. dense black smoke rising from factory chimney)..." maxlength="300"></textarea>
+
+      <!-- Submit Button & Assessment Notice -->
+      <button id="btnSubmitCitizenReport" class="btn-submit-report" type="button" disabled>
+        <span id="txtSubmitBtn">Submit Citizen Evidence</span>
+      </button>
+
+      <p class="scientific-disclaimer-small" id="txtObsNotice">
+        Notice: Citizen photos serve as qualitative ground evidence. They do not measure chemical gas concentrations (NO₂/SO₂).
+      </p>
+
+      <!-- Immediate Assessment Result Box -->
+      <div id="assessmentResultCard" class="assessment-result-card hidden">
+        <div class="assessment-result-head">
+          <span>🔍</span>
+          <span id="assessmentResultHeadline">AI Visual Assessment</span>
+        </div>
+        <p id="assessmentResultBody" class="assessment-result-text"></p>
+      </div>
+    </section>
+
     <!-- 3. Alert Status Card -->
     <section id="heroCard" class="hero-status-card GOOD">
       <div class="hero-header-row">
@@ -243,6 +371,9 @@ function createDOMShellOnce() {
         <div class="legend-row">
           <div class="legend-item"><span class="legend-dot arrow">➤</span><span id="txtLegArrow">🌬️ Arrow = Wind / Movement Direction</span></div>
         </div>
+        <div class="legend-row">
+          <div class="legend-item"><span class="legend-dot citizen">📷</span><span id="txtLegCitizen">🟣 Purple = Citizen Observation</span></div>
+        </div>
       </div>
     </section>
 
@@ -258,11 +389,11 @@ function createDOMShellOnce() {
 
     <!-- 7. Potentially Affected Area Card -->
     <section class="affected-card">
-      <div id="affectedIcon" class="affected-icon">🛡️</div>
+      <div id="affectedIcon" class="affected-icon">ℹ️</div>
       <div class="affected-info">
         <div id="txtAffTitle" class="affected-title">Potentially affected area</div>
-        <div id="affectedStatus" class="affected-status">Your area is not currently in the direct downwind path.</div>
-        <div id="affectedSub" class="affected-sub">Corridor distance estimate</div>
+        <div id="affectedStatus" class="affected-status">Downwind analysis unavailable</div>
+        <div id="affectedSub" class="affected-sub">Wind data is currently unavailable, so pollution movement and affected-area estimation cannot be determined.</div>
       </div>
     </section>
 
@@ -396,6 +527,18 @@ function applyLanguage() {
   document.querySelector("#txtTechObsLabel").textContent = `${t("obsTime")}: `;
   document.querySelector("#txtTechCoordsLabel").textContent = `${t("userCoords")}: `;
   document.querySelector("#txtWidgetTitle").textContent = `📱 ${t("widgetTitle")}`;
+  document.querySelector("#txtReportBtn").textContent = t("reportBtn");
+  document.querySelector("#txtReportTitle").textContent = t("reportTitle");
+  document.querySelector("#txtReportSub").textContent = t("reportSub");
+  document.querySelector("#txtCategoryLabel").textContent = t("categoryLabel");
+  document.querySelector("#txtCatSmoke").textContent = t("catSmoke");
+  document.querySelector("#txtCatFire").textContent = t("catFire");
+  document.querySelector("#txtCatIndustrial").textContent = t("catIndustrial");
+  document.querySelector("#txtCatDust").textContent = t("catDust");
+  document.querySelector("#txtSubmitBtn").textContent = t("submitObservation");
+  document.querySelector("#txtObsNotice").textContent = t("observationNotice");
+  document.querySelector("#txtLegCitizen").textContent = t("legendCitizen");
+  document.querySelector("#txtCitizenFeedTitle").textContent = t("citizenObsTitle");
   document.querySelector("#txtDisclaimer").textContent = t("disclaimer");
 
   const enBtn = document.querySelector("#langEnBtn");
@@ -616,6 +759,50 @@ function renderMapData(data) {
     }
   }
 
+  // 6b. Citizen Observations Layer (🟣 Purple camera pins)
+  citizenMarkers.forEach(m => m.remove());
+  citizenMarkers = [];
+
+  if (data.citizen_observations && data.citizen_observations.length > 0) {
+    data.citizen_observations.forEach(obs => {
+      if (obs.latitude && obs.longitude) {
+        bounds.extend([obs.latitude, obs.longitude]);
+        const catLabel = currentLang === 'ta' ? (obs.category_label_ta || obs.category) : (obs.category_label_en || obs.category);
+        const iconSymbol = obs.category_icon || "📸";
+        const citIcon = L.divIcon({
+          className: "pulse-citizen-marker",
+          html: `<div class="citizen-marker-inner">${iconSymbol}</div>`,
+          iconSize: [26, 26],
+          iconAnchor: [13, 13]
+        });
+
+        const assessment = obs.ai_assessment || {};
+        const assessHead = currentLang === 'ta' ? (assessment.headline_ta || assessment.headline_en) : assessment.headline_en;
+        const distKm = obs.distance_km != null ? `${obs.distance_km} km away` : '';
+        const timeStr = new Date(obs.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        const photoHtml = obs.photo_preview ? `<div class="obs-popup-photo"><img src="${obs.photo_preview}" alt="${catLabel}" style="width:100%; max-height:120px; object-fit:cover; border-radius:6px; margin:4px 0;" /></div>` : '';
+
+        const popupContent = `
+          <div class="citizen-popup-wrap">
+            <div class="obs-popup-header"><b>🟣 ${catLabel}</b> <small>(${distKm})</small></div>
+            ${photoHtml}
+            ${obs.description ? `<p class="obs-popup-desc">"${obs.description}"</p>` : ''}
+            <div class="obs-popup-assessment">
+              <span class="obs-pill">🔍 ${assessHead || t('groundVerificationReq')}</span>
+            </div>
+            <div class="obs-popup-footer"><small>📅 ${timeStr} • Citizen Evidence (Requires Verification)</small></div>
+          </div>
+        `;
+
+        const cm = L.marker([obs.latitude, obs.longitude], { icon: citIcon, zIndexOffset: 850 })
+          .addTo(map)
+          .bindPopup(popupContent);
+        citizenMarkers.push(cm);
+      }
+    });
+  }
+
   // 7. Optional Priority Sites to Verify (Schools, Hospitals)
   if (data.sensitive_places && data.sensitive_places.length > 0) {
     data.sensitive_places.forEach(p => {
@@ -681,26 +868,37 @@ function updateUI(d) {
   const cardData = d.status_card || {};
   const hotspot = d.pollution_hotspot || d.hotspot;
   const hotspotDetected = hotspot?.detected === true;
-  const userAffected = d.exposure?.user_potentially_affected === true;
+  const hasWind = d.weather?.wind_direction_deg != null && d.weather?.wind_speed_kmh != null;
+  const userAffected = hasWind && d.exposure?.user_potentially_affected === true;
 
   if (hotspotDetected && userAffected) {
     // RED: Hotspot aligned with prevailing wind toward user
     heroCard.className = "hero-status-card HIGH";
     heroIcon.textContent = "🔴";
-    heroTitle.textContent = isTa ? "கவனமாக இருக்கவும்" : "ATTENTION";
+    heroTitle.textContent = isTa ? (cardData.title_ta || "கவனமாக இருக்கவும்") : (cardData.title_en || "ATTENTION");
     heroSub.textContent = isTa ?
-      "அருகில் உள்ள காற்று மாசு மையம், தற்போதைய காற்று வீசும் திசையால் உங்கள் பகுதியை நோக்கி நகர வாய்ப்புள்ளது. வரைபடத்தை பார்க்கவும்." :
-      "A nearby pollution hotspot is currently aligned with the prevailing wind toward your area. Consider checking the affected-area map.";
+      (cardData.summary_ta || "அருகில் உள்ள காற்று மாசு மையம், தற்போதைய காற்று வீசும் திசையால் உங்கள் பகுதியை நோக்கி நகர வாய்ப்புள்ளது. வரைபடத்தை பார்க்கவும்.") :
+      (cardData.summary_en || "A nearby pollution hotspot is currently aligned with the prevailing wind toward your area. Consider checking the affected-area map.");
     actionCard.className = "action-card high-alert";
     actionText.textContent = isTa ? (cardData.action_ta || t("attentionAction")) : (cardData.action_en || t("attentionAction"));
+  } else if (hotspotDetected && !hasWind) {
+    // ORANGE: Hotspot detected, but wind data unavailable
+    heroCard.className = "hero-status-card POLLUTED";
+    heroIcon.textContent = "🟠";
+    heroTitle.textContent = isTa ? (cardData.title_ta || "அருகில் காற்று மாசு உள்ளது") : (cardData.title_en || "POLLUTION NEARBY");
+    heroSub.textContent = isTa ?
+      (cardData.summary_ta || "அருகில் காற்று மாசு கண்டறியப்பட்டுள்ளது. காற்றின் தகவல் தற்போது கிடைக்காததால், நகர்வுப் பாதை தெரியவில்லை.") :
+      (cardData.summary_en || "A pollution hotspot was detected nearby. Downwind analysis is unavailable as wind data cannot be determined.");
+    actionCard.className = "action-card";
+    actionText.textContent = isTa ? (cardData.action_ta || t("downwindUnavailableSub")) : (cardData.action_en || t("downwindUnavailableSub"));
   } else if (hotspotDetected && !userAffected) {
     // ORANGE: Hotspot detected nearby, but wind moving away
     heroCard.className = "hero-status-card POLLUTED";
     heroIcon.textContent = "🟠";
-    heroTitle.textContent = isTa ? "அருகில் காற்று மாசு உள்ளது" : "POLLUTION NEARBY";
+    heroTitle.textContent = isTa ? (cardData.title_ta || "அருகில் காற்று மாசு உள்ளது") : (cardData.title_en || "POLLUTION NEARBY");
     heroSub.textContent = isTa ?
-      "அருகில் காற்று மாசு கண்டறியப்பட்டுள்ளது. தற்போதைய காற்று உங்கள் பகுதியை நோக்கி வீசவில்லை." :
-      "A pollution hotspot was detected nearby. Current wind does not indicate movement toward your area.";
+      (cardData.summary_ta || "அருகில் காற்று மாசு கண்டறியப்பட்டுள்ளது. தற்போதைய காற்று உங்கள் பகுதியை நோக்கி வீசவில்லை.") :
+      (cardData.summary_en || "A pollution hotspot was detected nearby. Current wind does not indicate movement toward your area.");
     actionCard.className = "action-card";
     actionText.textContent = isTa ? (cardData.action_ta || t("pollutionNearbyAction")) : (cardData.action_en || t("pollutionNearbyAction"));
   } else if (risk === "MODERATE") {
@@ -709,13 +907,13 @@ function updateUI(d) {
     heroTitle.textContent = isTa ? (cardData.title_ta || "கவனமாக இருக்கவும்") : (cardData.title_en || "BE CAREFUL");
     heroSub.textContent = isTa ? (cardData.summary_ta || "காற்று மாசு சற்று அதிகரித்துள்ளது.") : (cardData.summary_en || "Pollution is slightly elevated near your area.");
     actionCard.className = "action-card";
-    actionText.textContent = isTa ? (cardData.action_ta || t("pollutionNearbyAction")) : (cardData.action_en || t("pollutionNearbyAction"));
+    actionText.textContent = isTa ? (cardData.action_ta || (hasWind ? t("pollutionNearbyAction") : t("downwindUnavailableSub"))) : (cardData.action_en || (hasWind ? t("pollutionNearbyAction") : t("downwindUnavailableSub")));
   } else {
     // GREEN: Clean atmosphere, no hotspot
     heroCard.className = "hero-status-card GOOD";
     heroIcon.textContent = "🟢";
-    heroTitle.textContent = isTa ? "காற்று சுத்தமாக உள்ளது" : "AIR IS GOOD";
-    heroSub.textContent = isTa ? "அருகில் குறிப்பிடத்தக்க காற்று மாசு மையம் எதுவும் இல்லை." : "No significant nearby pollution hotspot detected.";
+    heroTitle.textContent = isTa ? (cardData.title_ta || "காற்று சுத்தமாக உள்ளது") : (cardData.title_en || "AIR IS GOOD");
+    heroSub.textContent = isTa ? (cardData.summary_ta || "அருகில் குறிப்பிடத்தக்க காற்று மாசு மையம் எதுவும் இல்லை.") : (cardData.summary_en || "No significant nearby pollution hotspot detected.");
     actionCard.className = "action-card";
     actionText.textContent = isTa ? (cardData.action_ta || t("airGoodAction")) : (cardData.action_en || t("airGoodAction"));
   }
@@ -731,7 +929,7 @@ function updateUI(d) {
   const moveHeading = document.querySelector("#movementHeading");
   const moveSub = document.querySelector("#movementSub");
 
-  if (d.movement && d.movement.bearing_deg != null) {
+  if (hasWind && d.movement && d.movement.bearing_deg != null) {
     compass.textContent = "⬆️";
     compass.style.transform = `rotate(${d.movement.bearing_deg}deg)`;
     const dirStr = isTa ? d.movement.direction_ta : d.movement.direction;
@@ -748,8 +946,10 @@ function updateUI(d) {
       (isTa ? `காற்றின் வேகம்: ${speed} கி.மீ/மணி` : `Surface wind speed: ${speed} km/h`) :
       (isTa ? "வானிலை தகவல் அடிப்படையில் கணிக்கப்பட்டது" : "Calculated from meteorological wind vectors");
   } else {
+    compass.textContent = "🧭";
+    compass.style.transform = "none";
     moveHeading.textContent = isTa ? "காற்றின் திசை கிடைக்கவில்லை" : t("weatherUnavailable");
-    moveSub.textContent = isTa ? "வானிலை தகவல் தற்காலிகமாக கிடைக்கவில்லை" : "Weather data unavailable";
+    moveSub.textContent = isTa ? t("downwindUnavailableSub") : "Wind data is currently unavailable, so pollution movement and affected-area estimation cannot be determined.";
   }
 
   // 6. Potentially Affected Area Section
@@ -757,7 +957,12 @@ function updateUI(d) {
   const affStatus = document.querySelector("#affectedStatus");
   const affSub = document.querySelector("#affectedSub");
 
-  if (userAffected) {
+  if (!hasWind || !d.exposure || d.exposure.downwind_available === false) {
+    affIcon.textContent = "ℹ️";
+    affStatus.textContent = t("downwindUnavailable");
+    affSub.textContent = t("downwindUnavailableSub");
+    affStatus.style.color = "#94a3b8";
+  } else if (userAffected) {
     affIcon.textContent = "⚠️";
     affStatus.textContent = t("userMayBeAffected");
     affSub.textContent = isTa ? (d.exposure?.text_ta || "") : (d.exposure?.text_en || "");
@@ -816,6 +1021,47 @@ function updateUI(d) {
   document.querySelector("#techObsTime").textContent = d.pollution?.no2_latest ?
     new Date(d.pollution.no2_latest).toLocaleString() : "Real-time weather proxy active";
   document.querySelector("#techCoords").textContent = `${d.user_location.latitude.toFixed(4)}°, ${d.user_location.longitude.toFixed(4)}°`;
+
+  // 10b. Update Citizen Observations Feed
+  const feedList = document.querySelector("#citizenFeedList");
+  const feedBadge = document.querySelector("#citizenFeedBadge");
+  const observations = d.citizen_observations || [];
+
+  if (feedBadge) {
+    feedBadge.textContent = `${observations.length} ${isTa ? 'பதிவுகள்' : 'REPORTS'}`;
+  }
+
+  if (feedList) {
+    if (observations.length === 0) {
+      feedList.innerHTML = `<div class="empty-feed-msg" id="txtNoCitizenObs">${t("noCitizenObs")}</div>`;
+    } else {
+      feedList.innerHTML = observations.map(obs => {
+        const catLabel = isTa ? (obs.category_label_ta || obs.category) : (obs.category_label_en || obs.category);
+        const icon = obs.category_icon || "📸";
+        const dist = obs.distance_km != null ? `${obs.distance_km} km ${isTa ? 'தொலைவில்' : 'away'}` : '';
+        const assessment = obs.ai_assessment || {};
+        const assessHead = isTa ? (assessment.headline_ta || assessment.headline_en) : assessment.headline_en;
+        const timeStr = new Date(obs.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        return `
+          <div class="citizen-feed-item">
+            ${obs.photo_preview ? `<div class="feed-item-thumb"><img src="${obs.photo_preview}" alt="${catLabel}" /></div>` : ''}
+            <div class="feed-item-content">
+              <div class="feed-item-top">
+                <span class="feed-item-category">${icon} ${catLabel}</span>
+                <span class="feed-item-dist">${dist}</span>
+              </div>
+              ${obs.description ? `<p class="feed-item-desc">"${obs.description}"</p>` : ''}
+              <div>
+                <span class="feed-item-pill">🔍 ${assessHead || t("groundVerificationReq")}</span>
+              </div>
+              <span class="feed-item-time">🕒 ${timeStr} • ${isTa ? 'கள ஆய்வு தேவை' : 'Citizen Evidence'}</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+  }
 
   // 11. Android Widget Mirror
   const wStatus = document.querySelector("#widgetStatusText");
@@ -967,6 +1213,11 @@ function onLocationSuccess(lat, lon, customCityName = null) {
     localStorage.setItem("vayunet_last_coords", JSON.stringify({ lat, lon }));
   } catch (e) {}
 
+  const attachedGps = document.querySelector("#txtAttachedGps");
+  if (attachedGps) {
+    attachedGps.textContent = `📍 GPS Attached: ${lat.toFixed(5)}°, ${lon.toFixed(5)}°`;
+  }
+
   const latDisplay = document.querySelector("#locLatDisplay");
   const lonDisplay = document.querySelector("#locLonDisplay");
   if (latDisplay) latDisplay.textContent = `Latitude: ${lat.toFixed(5)}`;
@@ -987,17 +1238,17 @@ function onLocationSuccess(lat, lon, customCityName = null) {
   fetchAnalysis(lat, lon);
 }
 
-// Acquire Device Geolocation with live network fallback
+// Acquire Device Geolocation (Strictly device GPS coordinates - no random IP fallback)
 async function acquireLocation() {
   const placeNameEl = document.querySelector("#locPlaceName");
   if (placeNameEl) placeNameEl.textContent = `📍 ${t("gettingLoc")}`;
 
-  // 1. URL Query Override (?lat=...&lon=...)
+  // 1. URL Query Override (?lat=...&lon=...) e.g. when opened from Android Native App
   const urlParams = new URLSearchParams(window.location.search);
   const qLat = parseFloat(urlParams.get("lat"));
   const qLon = parseFloat(urlParams.get("lon"));
-  if (!isNaN(qLat) && !isNaN(qLon)) {
-    onLocationSuccess(qLat, qLon);
+  if (!isNaN(qLat) && !isNaN(qLon) && qLat >= -90 && qLat <= 90 && qLon >= -180 && qLon <= 180 && (qLat !== 0 || qLon !== 0)) {
+    onLocationSuccess(qLat, qLon, "Device GPS (Synced)");
     return;
   }
 
@@ -1007,66 +1258,30 @@ async function acquireLocation() {
     return;
   }
 
-  // Helper for IP fallback
-  const tryIpFallback = async () => {
-    try {
-      const resp = await fetch("https://ipwho.is/", { signal: AbortSignal.timeout(4000) });
-      if (resp.ok) {
-        const data = await resp.json();
-        if (data.success && data.latitude && data.longitude) {
-          const cityName = `${data.city || "Current Location"}, ${data.region || ""}`.trim().replace(/^,|,$/g, "");
-          onLocationSuccess(data.latitude, data.longitude, cityName);
-          return true;
-        }
-      }
-    } catch (e) {
-      console.debug("IP geolocation notice:", e);
-    }
-    // Try localStorage if IP fallback also failed
-    try {
-      const saved = localStorage.getItem("vayunet_last_coords");
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.lat && parsed.lon) {
-          onLocationSuccess(parsed.lat, parsed.lon);
-          return true;
-        }
-      }
-    } catch (e) {}
-    return false;
-  };
-
-  // 3. Try HTML5 Geolocation API
+  // 3. Try HTML5 Geolocation API with high accuracy GPS
   if (navigator.geolocation) {
-    let resolved = false;
-
     navigator.geolocation.getCurrentPosition(
       pos => {
-        resolved = true;
-        onLocationSuccess(pos.coords.latitude, pos.coords.longitude);
-      },
-      async err => {
-        console.warn("Device geolocation notice:", err.message);
-        if (!resolved) {
-          resolved = true;
-          const ok = await tryIpFallback();
-          if (!ok && placeNameEl) {
-            placeNameEl.textContent = "📍 Location permission needed. Tap 'Update my location' to retry.";
-          }
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        if (lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180 && (lat !== 0 || lon !== 0)) {
+          onLocationSuccess(lat, lon);
+        } else if (placeNameEl) {
+          placeNameEl.textContent = "📍 Invalid coordinates received from device. Tap 'Update my location' to retry.";
         }
       },
-      { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
+      err => {
+        console.warn("Device geolocation notice:", err.message);
+        if (placeNameEl) {
+          placeNameEl.textContent = "📍 Unable to get your current location. Please allow location access, enable GPS, and tap 'Update my location'.";
+        }
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
     );
-
-    // Timeout safety: if prompt hangs > 3.5s, trigger IP fallback
-    setTimeout(async () => {
-      if (!resolved && currentLat == null) {
-        console.debug("Geolocation slow; fetching IP network location...");
-        await tryIpFallback();
-      }
-    }, 3500);
   } else {
-    await tryIpFallback();
+    if (placeNameEl) {
+      placeNameEl.textContent = "📍 Geolocation is not supported by your browser.";
+    }
   }
 }
 
@@ -1124,6 +1339,172 @@ function attachEventHandlers() {
 
   // Notification Button
   document.querySelector("#alertEnableBtn")?.addEventListener("click", requestNotifications);
+
+  // --- Citizen Observation Handlers ---
+  const reportSection = document.querySelector("#citizenReportSection");
+  const openReportBtn = document.querySelector("#btnOpenCitizenReport");
+  const closeReportBtn = document.querySelector("#btnCloseCitizenReport");
+  const photoDropArea = document.querySelector("#photoDropArea");
+  const photoInput = document.querySelector("#citizenPhotoInput");
+  const photoPreviewWrap = document.querySelector("#photoPreviewWrap");
+  const photoPreviewImg = document.querySelector("#citizenPhotoPreview");
+  const removePhotoBtn = document.querySelector("#btnRemovePhoto");
+  const submitReportBtn = document.querySelector("#btnSubmitCitizenReport");
+  const descTextarea = document.querySelector("#citizenDescription");
+  const assessmentCard = document.querySelector("#assessmentResultCard");
+  const assessmentHeadline = document.querySelector("#assessmentResultHeadline");
+  const assessmentBody = document.querySelector("#assessmentResultBody");
+
+  // Toggle report section
+  openReportBtn?.addEventListener("click", () => {
+    reportSection?.classList.toggle("hidden");
+    if (!reportSection?.classList.contains("hidden")) {
+      reportSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const attachedGps = document.querySelector("#txtAttachedGps");
+      if (attachedGps && currentLat && currentLon) {
+        attachedGps.textContent = `📍 GPS Attached: ${currentLat.toFixed(5)}°, ${currentLon.toFixed(5)}°`;
+      }
+    }
+  });
+
+  closeReportBtn?.addEventListener("click", () => {
+    reportSection?.classList.add("hidden");
+  });
+
+  // Photo Input Triggers
+  photoDropArea?.addEventListener("click", () => {
+    photoInput?.click();
+  });
+
+  // Handle Image Selection with Client Compression to max 800px
+  photoInput?.addEventListener("change", (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const maxDim = 800;
+        let w = img.width;
+        let h = img.height;
+        if (w > h && w > maxDim) {
+          h = Math.round((h * maxDim) / w);
+          w = maxDim;
+        } else if (h > maxDim) {
+          w = Math.round((w * maxDim) / h);
+          h = maxDim;
+        }
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, w, h);
+        currentPhotoBase64 = canvas.toDataURL("image/jpeg", 0.78);
+
+        if (photoPreviewImg) photoPreviewImg.src = currentPhotoBase64;
+        photoDropArea?.classList.add("hidden");
+        photoPreviewWrap?.classList.remove("hidden");
+        if (submitReportBtn) submitReportBtn.disabled = false;
+      };
+      img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  removePhotoBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    currentPhotoBase64 = null;
+    if (photoInput) photoInput.value = "";
+    photoPreviewWrap?.classList.add("hidden");
+    photoDropArea?.classList.remove("hidden");
+    if (submitReportBtn) submitReportBtn.disabled = true;
+  });
+
+  // Category Selection
+  document.querySelectorAll(".category-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      document.querySelectorAll(".category-chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      selectedCitizenCategory = chip.getAttribute("data-cat") || "smoke_haze";
+    });
+  });
+
+  // Submit Observation
+  submitReportBtn?.addEventListener("click", async () => {
+    if (!currentPhotoBase64) {
+      alert("Please take or select a photo of the visible pollution first.");
+      return;
+    }
+    const lat = currentLat;
+    const lon = currentLon;
+    if (!lat || !lon) {
+      alert("Device location is still being detected. Please wait for GPS coordinates.");
+      return;
+    }
+
+    submitReportBtn.disabled = true;
+    submitReportBtn.textContent = t("submitting");
+
+    try {
+      const resp = await fetch(`${API_URL}/api/observations`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          latitude: lat,
+          longitude: lon,
+          photo_base64: currentPhotoBase64,
+          category: selectedCitizenCategory,
+          description: descTextarea?.value || ""
+        })
+      });
+
+      if (resp.ok) {
+        const result = await resp.json();
+        const obs = result.observation || {};
+        const assessment = obs.ai_assessment || {};
+
+        // Show assessment result
+        if (assessmentCard && assessmentHeadline && assessmentBody) {
+          assessmentHeadline.textContent = `🔍 ${assessment.headline_en || "AI Visual Assessment"}`;
+          assessmentBody.textContent = `${assessment.assessment_en || "Recorded as citizen ground evidence."} (${assessment.disclaimer || ""})`;
+          assessmentCard.classList.remove("hidden");
+        }
+
+        // Reset form
+        currentPhotoBase64 = null;
+        if (photoInput) photoInput.value = "";
+        photoPreviewWrap?.classList.add("hidden");
+        photoDropArea?.classList.remove("hidden");
+        if (descTextarea) descTextarea.value = "";
+
+        submitReportBtn.textContent = "✓ Observation Submitted!";
+        setTimeout(() => {
+          submitReportBtn.textContent = t("submitObservation");
+          submitReportBtn.disabled = true;
+        }, 3000);
+
+        // Refresh analysis to reflect new citizen observation layer
+        fetchAnalysis(lat, lon);
+      } else {
+        alert("Failed to submit observation. Please check network connection.");
+        submitReportBtn.disabled = false;
+        submitReportBtn.textContent = t("submitObservation");
+      }
+    } catch (err) {
+      console.error("Citizen observation submit error:", err);
+      alert(`Submission error: ${err.message}`);
+      submitReportBtn.disabled = false;
+      submitReportBtn.textContent = t("submitObservation");
+    }
+  });
+
+  // Check URL param action=report (e.g. from Android app)
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get("action") === "report") {
+    reportSection?.classList.remove("hidden");
+    reportSection?.scrollIntoView({ behavior: "smooth" });
+  }
 }
 
 // Bootstrapping

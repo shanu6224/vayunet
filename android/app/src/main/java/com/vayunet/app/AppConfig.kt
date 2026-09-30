@@ -10,6 +10,6 @@ object AppConfig {
      * Replace with your deployed backend URL on Render, Railway, etc.
      * Example: "https://vayunet-api.onrender.com"
      */
-    const val DEFAULT_API_BASE_URL: String = "https://vayunet-api.onrender.com"
+    const val DEFAULT_API_BASE_URL: String = "https://vayunet-api-7iih.onrender.com"
     const val DEFAULT_PWA_URL: String = "https://vayunet-app.onrender.com"
 }

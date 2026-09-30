@@ -98,13 +98,13 @@ def movement_from_wind(wind_speed_kmh: Optional[float], wind_direction_deg: Opti
     if wind_direction_deg is None:
         return {
             "detected": False,
-            "direction": "Unknown",
+            "direction": "Unavailable",
             "direction_short": "—",
-            "direction_ta": "தெரியவில்லை",
+            "direction_ta": "கிடைக்கவில்லை",
             "bearing_deg": None,
             "confidence": 0.0,
-            "text_en": "Wind direction unavailable",
-            "text_ta": "காற்றின் திசை கிடைக்கவில்லை"
+            "text_en": "Wind data is currently unavailable, so pollution movement and affected-area estimation cannot be determined.",
+            "text_ta": "காற்றின் தகவல் தற்போது கிடைக்காததால், மாசு நகர்வு மற்றும் பாதிக்கப்படக்கூடிய பகுதியை கணிக்க இயலவில்லை."
         }
 
     bearing = (wind_direction_deg + 180.0) % 360.0
@@ -238,7 +238,22 @@ def generate_exposure_zone(
     Calculates whether the user is located in the downwind path of the hotspot.
     """
     if wind_direction_deg is None:
-        return None
+        return {
+            "origin_latitude": hotspot_lat,
+            "origin_longitude": hotspot_lon,
+            "center_latitude": None,
+            "center_longitude": None,
+            "distance_km": None,
+            "bearing_deg": None,
+            "downwind_available": False,
+            "user_potentially_affected": False,
+            "movement_toward_user": False,
+            "corridor_geojson": None,
+            "affected_geojson": None,
+            "geojson": None,
+            "text_en": "Wind data is currently unavailable, so pollution movement and affected-area estimation cannot be determined.",
+            "text_ta": "காற்றின் தகவல் தற்போது கிடைக்காததால், மாசு நகர்வு மற்றும் பாதிக்கப்படக்கூடிய பகுதியை கணிக்க இயலவில்லை."
+        }
 
     # Pollution movement and exposure corridors ONLY originate from a detected pollution hotspot.
     # They NEVER originate from the user's location.
@@ -323,6 +338,7 @@ def generate_exposure_zone(
         "center_longitude": round(center_lon, 5),
         "distance_km": round(distance_km, 1),
         "bearing_deg": round(downwind_bearing, 1),
+        "downwind_available": True,
         "user_potentially_affected": user_affected,
         "movement_toward_user": movement_toward_user,
         "corridor_geojson": corridor_geojson,

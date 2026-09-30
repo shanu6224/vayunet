@@ -67,7 +67,42 @@ def test_endpoints():
     # Technical details houses the diagnostic
     assert "GEE_PROJECT_ID" in gdata["technical_details"]["gee_diagnostic"]
 
-    print("\nAll scenario unit tests passed successfully!")
+    print("\n--- SCENARIO E: Citizen Pollution Observation submission & retrieval ---")
+    photo_sample = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+    obs_resp = client.post("/api/observations", json={
+        "latitude": 9.9252,
+        "longitude": 78.1198,
+        "photo_base64": photo_sample,
+        "category": "smoke_haze",
+        "description": "Dense smoke reported near ring road intersection"
+    })
+    assert obs_resp.status_code == 201
+    obs_data = obs_resp.json()
+    assert obs_data["status"] == "success"
+    obs_item = obs_data["observation"]
+    print("Obs ID:", obs_item["id"])
+    print("Category:", obs_item["category_label_en"])
+    print("AI Headline:", obs_item["ai_assessment"]["headline_en"])
+    print("Disclaimer:", obs_item["ai_assessment"]["disclaimer"])
+    assert "Possible Visible Pollution Evidence" in obs_item["ai_assessment"]["headline_en"]
+    assert "does not quantify" in obs_item["ai_assessment"]["disclaimer"].lower() or "does not measure" in obs_item["ai_assessment"]["assessment_en"].lower()
+
+    get_resp = client.get("/api/observations?latitude=9.9252&longitude=78.1198&radius_km=15")
+    assert get_resp.status_code == 200
+    nearby_data = get_resp.json()
+    assert nearby_data["count"] >= 1
+    print("Nearby citizen observations retrieved:", nearby_data["count"])
+
+    # Check analyze response reflects citizen layer
+    r_comb = client.post("/api/analyze", json={"latitude": 9.9252, "longitude": 78.1198})
+    assert r_comb.status_code == 200
+    comb_data = r_comb.json()
+    assert "citizen_observations" in comb_data
+    assert "citizen_evidence" in comb_data
+    assert comb_data["citizen_evidence"]["count"] >= 1
+    print("Citizen evidence in /api/analyze:", comb_data["citizen_evidence"]["summary_en"])
+
+    print("\nAll scenario and citizen observation tests passed successfully!")
 
 if __name__ == "__main__":
     test_endpoints()

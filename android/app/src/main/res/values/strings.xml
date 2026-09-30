@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">VayuNet</string>
+    <string name="widget_name">VayuNet Risk Advisory</string>
+    <string name="widget_description">Live hyper-local pollution intelligence and dispersion alerts.</string>
+</resources>

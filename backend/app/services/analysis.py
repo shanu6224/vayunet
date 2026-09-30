@@ -14,6 +14,7 @@ from .risk_engine import (
     generate_exposure_zone
 )
 from .places_service import get_sensitive_places
+from .citizen_service import get_nearby_observations
 
 logger = logging.getLogger("vayunet.analysis")
 
@@ -33,27 +34,43 @@ def _check_alert_cooldown(lat: float, lon: float, risk_level: str) -> bool:
     _ALERT_CACHE[key] = (now, risk_level)
     return True
 
-def _get_bilingual_status(risk_level: str, user_affected: bool, hotspot_detected: bool) -> Dict[str, Any]:
-    if hotspot_detected and user_affected:
-        return {
-            "title_en": "ATTENTION",
-            "title_ta": "கவனமாக இருக்கவும்",
-            "badge_color": "#EF4444",
-            "summary_en": "A nearby pollution hotspot is currently aligned with the prevailing wind toward your area. Consider checking the affected-area map.",
-            "summary_ta": "அருகில் உள்ள காற்று மாசு மையம், தற்போதைய காற்று வீசும் திசையால் உங்கள் பகுதியை நோக்கி நகர வாய்ப்புள்ளது. வரைபடத்தை பார்க்கவும்.",
-            "action_en": "Stay indoors if possible and follow local official advisories.",
-            "action_ta": "முடிந்தவரை வீட்டிற்குள் இருக்கவும், அரசு வழிகாட்டுதல்களைப் பின்பற்றவும்."
-        }
-    elif hotspot_detected and not user_affected:
-        return {
-            "title_en": "POLLUTION NEARBY",
-            "title_ta": "அருகில் காற்று மாசு உள்ளது",
-            "badge_color": "#F59E0B",
-            "summary_en": "A pollution hotspot was detected nearby. Current wind does not indicate movement toward your area.",
-            "summary_ta": "அருகில் காற்று மாசு கண்டறியப்பட்டுள்ளது. தற்போதைய காற்று உங்கள் பகுதியை நோக்கி வீசவில்லை.",
-            "action_en": "Air in your immediate area is safe. Monitor for wind direction changes.",
-            "action_ta": "உங்கள் பகுதியில் காற்று தற்போது பாதுகாப்பாக உள்ளது. நிலவரத்தை கவனிக்கவும்."
-        }
+def _get_bilingual_status(
+    risk_level: str,
+    user_affected: bool,
+    hotspot_detected: bool,
+    wind_available: bool = True
+) -> Dict[str, Any]:
+    if hotspot_detected:
+        if not wind_available:
+            return {
+                "title_en": "POLLUTION NEARBY",
+                "title_ta": "அருகில் காற்று மாசு உள்ளது",
+                "badge_color": "#F59E0B",
+                "summary_en": "A pollution hotspot was detected nearby. Downwind analysis is unavailable as wind data cannot be determined.",
+                "summary_ta": "அருகில் காற்று மாசு கண்டறியப்பட்டுள்ளது. காற்றின் தகவல் தற்போது கிடைக்காததால், நகர்வுப் பாதை தெரியவில்லை.",
+                "action_en": "Wind data is currently unavailable, so pollution movement and affected-area estimation cannot be determined.",
+                "action_ta": "காற்றின் தகவல் தற்போது கிடைக்காததால், மாசு நகர்வு மற்றும் பாதிக்கப்படக்கூடிய பகுதியை கணிக்க இயலவில்லை."
+            }
+        elif user_affected:
+            return {
+                "title_en": "ATTENTION",
+                "title_ta": "கவனமாக இருக்கவும்",
+                "badge_color": "#EF4444",
+                "summary_en": "A nearby pollution hotspot is currently aligned with the prevailing wind toward your area. Consider checking the affected-area map.",
+                "summary_ta": "அருகில் உள்ள காற்று மாசு மையம், தற்போதைய காற்று வீசும் திசையால் உங்கள் பகுதியை நோக்கி நகர வாய்ப்புள்ளது. வரைபடத்தை பார்க்கவும்.",
+                "action_en": "Stay indoors if possible and follow local official advisories.",
+                "action_ta": "முடிந்தவரை வீட்டிற்குள் இருக்கவும், அரசு வழிகாட்டுதல்களைப் பின்பற்றவும்."
+            }
+        else:
+            return {
+                "title_en": "POLLUTION NEARBY",
+                "title_ta": "அருகில் காற்று மாசு உள்ளது",
+                "badge_color": "#F59E0B",
+                "summary_en": "A pollution hotspot was detected nearby. Current wind does not indicate movement toward your area.",
+                "summary_ta": "அருகில் காற்று மாசு கண்டறியப்பட்டுள்ளது. தற்போதைய காற்று உங்கள் பகுதியை நோக்கி வீசவில்லை.",
+                "action_en": "Air in your immediate area is safe. Monitor for wind direction changes.",
+                "action_ta": "உங்கள் பகுதியில் காற்று தற்போது பாதுகாப்பாக உள்ளது. நிலவரத்தை கவனிக்கவும்."
+            }
     elif risk_level == "MODERATE":
         return {
             "title_en": "BE CAREFUL",
@@ -235,9 +252,10 @@ async def analyze_location(lat: float, lon: float, demo_override: Optional[bool]
     location_info = await get_human_location_name(lat, lon)
 
     # 9. Simple Bilingual Status & Advice based on scenarios
+    has_wind = weather_data.get("wind_speed_kmh") is not None and weather_data.get("wind_direction_deg") is not None
     user_affected = exposure.get("user_potentially_affected", False) if exposure else False
     hotspot_detected = hotspot.get("detected", False)
-    status_card = _get_bilingual_status(risk_level, user_affected, hotspot_detected)
+    status_card = _get_bilingual_status(risk_level, user_affected, hotspot_detected, wind_available=has_wind)
 
     # Generate simple "Why this alert?" explanation
     wind_sp = weather_data.get("wind_speed_kmh")
@@ -247,18 +265,29 @@ async def analyze_location(lat: float, lon: float, demo_override: Optional[bool]
     dir_ta = movement.get("direction_ta", "திசையில்")
 
     if hotspot_detected:
-        if user_affected:
+        if not has_wind:
+            why_en = "A pollution hotspot was detected nearby based on satellite observations. Wind data is currently unavailable, so pollution movement and affected-area estimation cannot be determined."
+            why_ta = "செயற்கைக்கோள் கண்காணிப்பில் அருகில் காற்று மாசு கண்டறியப்பட்டுள்ளது. காற்றின் தகவல் தற்போது கிடைக்காததால் அதன் நகர்வுப் பாதையைக் கணிக்க இயலவில்லை."
+        elif user_affected:
             why_en = f"A nearby pollution hotspot was detected based on satellite observations, and prevailing wind{wind_str} may move air toward your area ({dir_en})."
             why_ta = f"செயற்கைக்கோள் கண்காணிப்பில் அருகில் காற்று மாசு கண்டறியப்பட்டுள்ளது. காற்று{wind_ta_str} உங்கள் பகுதியை நோக்கி ({dir_ta}) நகர வாய்ப்புள்ளது."
         else:
             why_en = f"A pollution hotspot was detected nearby based on satellite observations. Current wind{wind_str} is blowing toward {dir_en}, away from your area."
             why_ta = f"செயற்கைக்கோள் கண்காணிப்பில் அருகில் காற்று மாசு உள்ளது. காற்று{wind_ta_str} {dir_ta} நோக்கி வீசுகிறது (உங்கள் பகுதியிலிருந்து விலகிச் செல்கிறது)."
     elif risk_level == "MODERATE":
-        why_en = f"Local atmospheric observations show slight elevation above baseline with wind{wind_str} toward {dir_en}."
-        why_ta = f"வழக்கமான அளவை விட காற்று மாசு சற்று உயர்ந்துள்ளது. காற்று{wind_ta_str} {dir_ta} நோக்கி வீசுகிறது."
+        if not has_wind:
+            why_en = "Local atmospheric observations show slight elevation above baseline. Wind data is currently unavailable."
+            why_ta = "வழக்கமான அளவை விட காற்று மாசு சற்று உயர்ந்துள்ளது. காற்றின் தகவல் தற்போது கிடைக்கவில்லை."
+        else:
+            why_en = f"Local atmospheric observations show slight elevation above baseline with wind{wind_str} toward {dir_en}."
+            why_ta = f"வழக்கமான அளவை விட காற்று மாசு சற்று உயர்ந்துள்ளது. காற்று{wind_ta_str} {dir_ta} நோக்கி வீசுகிறது."
     else:
-        why_en = f"No significant nearby pollution hotspot detected based on satellite observations and current wind conditions."
-        why_ta = f"செயற்கைக்கோள் கண்காணிப்பு மற்றும் தற்போதைய காற்றின் அடிப்படையில் உங்கள் பகுதியில் குறிப்பிடத்தக்க காற்று மாசு மையம் எதுவும் இல்லை."
+        if not has_wind:
+            why_en = "No significant nearby pollution hotspot detected based on satellite observations. (Wind data is currently unavailable)."
+            why_ta = "செயற்கைக்கோள் கண்காணிப்பில் உங்கள் பகுதியில் குறிப்பிடத்தக்க காற்று மாசு மையம் எதுவும் இல்லை. (காற்றின் தகவல் தற்போது கிடைக்கவில்லை)."
+        else:
+            why_en = "No significant nearby pollution hotspot detected based on satellite observations and current wind conditions."
+            why_ta = "செயற்கைக்கோள் கண்காணிப்பு மற்றும் தற்போதைய காற்றின் அடிப்படையில் உங்கள் பகுதியில் குறிப்பிடத்தக்க காற்று மாசு மையம் எதுவும் இல்லை."
 
     status_card["why_en"] = why_en
     status_card["why_ta"] = why_ta
@@ -290,6 +319,27 @@ async def analyze_location(lat: float, lon: float, demo_override: Optional[bool]
 
     final_status = "HIGH" if (hotspot_detected and user_affected) else ("MODERATE" if hotspot_detected else risk_level)
 
+    # 8b. Nearby Citizen Observations (Qualitative Ground Evidence Layer)
+    citizen_observations = get_nearby_observations(lat, lon, radius_km=radius_km, limit=10, include_photo=True)
+    citizen_count = len(citizen_observations)
+    has_citizen_evidence = any(
+        o.get("ai_assessment", {}).get("has_visible_evidence", False) for o in citizen_observations
+    )
+    citizen_summary = {
+        "count": citizen_count,
+        "has_visible_evidence": has_citizen_evidence,
+        "summary_en": (
+            f"{citizen_count} citizen observation(s) recorded within {radius_km:.0f} km. "
+            "Qualitative visual evidence awaiting localized ground verification; does not measure chemical gas concentrations."
+            if citizen_count > 0 else "No citizen visual observations reported in this area."
+        ),
+        "summary_ta": (
+            f"சுற்றுவட்டாரத்தில் {citizen_count} பொதுமக்கள் நேரடி பதிவு(கள்) உள்ளன (கள சரிபார்ப்புக்கு உட்பட்டது)."
+            if citizen_count > 0 else "இந்த பகுதியில் பொதுமக்கள் நேரடி பதிவுகள் எதுவும் இல்லை."
+        ),
+        "disclaimer": "Citizen photos provide qualitative visible context and ground-level alerts. They do not quantify gas column densities."
+    }
+
     return {
         "status": final_status,
         "risk_level": final_status,
@@ -306,6 +356,8 @@ async def analyze_location(lat: float, lon: float, demo_override: Optional[bool]
         "exposure": exposure,
         "potential_exposure": exposure,
         "sensitive_places": sensitive_places,
+        "citizen_observations": citizen_observations,
+        "citizen_evidence": citizen_summary,
         "weather": weather_data,
         "pollution": pollution_data,
         "satellite_available": satellite_available,
@@ -317,7 +369,10 @@ async def analyze_location(lat: float, lon: float, demo_override: Optional[bool]
         },
         "intelligence": {
             "summary": status_card["summary_en"],
-            "recommendations": status_card["action_en"]
+            "recommendations": (
+                f"{status_card['action_en']} Note: {citizen_count} citizen observation(s) reported nearby awaiting ground verification."
+                if citizen_count > 0 else status_card["action_en"]
+            )
         },
         "alert": {
             "should_alert": should_alert and alert_allowed,
@@ -325,8 +380,8 @@ async def analyze_location(lat: float, lon: float, demo_override: Optional[bool]
             "vibrate": should_alert,
             "title_en": f"⚠️ VayuNet Alert: {status_card['title_en']}",
             "title_ta": f"⚠️ வாயுநெட் எச்சரிக்கை: {status_card['title_ta']}",
-            "message_en": f"{status_card['summary_en']} Possible movement toward {dir_en}.",
-            "message_ta": f"{status_card['summary_ta']} மாசு செல்லக்கூடிய திசை: {dir_ta}."
+            "message_en": f"{status_card['summary_en']}{(' Possible movement toward ' + dir_en + '.') if has_wind else ''}",
+            "message_ta": f"{status_card['summary_ta']}{(' மாசு செல்லக்கூடிய திசை: ' + dir_ta + '.') if has_wind else ''}"
         },
         "technical_details": {
             "analysis_radius_km": radius_km,

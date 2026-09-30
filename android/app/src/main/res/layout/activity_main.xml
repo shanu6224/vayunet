@@ -84,7 +84,7 @@
             android:id="@+id/btnCheckLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="📍 Check Surrounding Pollution"
+            android:text="📍 Check Location &amp; Refresh"
             android:backgroundTint="#14B8A6"
             android:textColor="#042F2E"
             android:textStyle="bold"
@@ -92,12 +92,110 @@
 
         <TextView
             android:id="@+id/txtLocation"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="📍 Your Location: Detecting..."
+            android:text="📍 Your Location: Acquiring fresh GPS fix..."
             android:textColor="#CBD5E1"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+        <!-- Location Warnings & Guidance -->
+        <TextView
+            android:id="@+id/txtLocationWarning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#F59E0B"
             android:textSize="12sp"
-            android:layout_marginTop="6dp" />
+            android:visibility="gone"
+            android:layout_marginTop="4dp" />
+
+        <LinearLayout
+            android:id="@+id/layoutActionButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <Button
+                android:id="@+id/btnRetryLocation"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="🔄 Retry Location"
+                android:backgroundTint="#0D9488"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:layout_marginEnd="4dp" />
+
+            <Button
+                android:id="@+id/btnEnableGps"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="⚙️ Enable Location (GPS)"
+                android:backgroundTint="#F59E0B"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:layout_marginStart="4dp" />
+        </LinearLayout>
+
+        <!-- Visible GPS Debug Info Card (Requirement 13) -->
+        <LinearLayout
+            android:id="@+id/layoutLocationDebug"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#0A1E24"
+            android:padding="10dp"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🔍 Live GPS Telemetry (Google Play Services Fused)"
+                android:textColor="#5EEAD4"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtDebugCoords"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Coordinates: Awaiting fresh fix..."
+                android:textColor="#94A3B8"
+                android:textSize="11sp"
+                android:layout_marginTop="3dp" />
+
+            <TextView
+                android:id="@+id/txtDebugAccuracy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Accuracy: —"
+                android:textColor="#94A3B8"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/txtDebugTimestamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Timestamp: —"
+                android:textColor="#94A3B8"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/txtDebugProvider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Provider / Source: FusedLocationProviderClient"
+                android:textColor="#94A3B8"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
 
         <!-- Real Analysis Card -->
         <LinearLayout
@@ -157,6 +255,16 @@
 
         <!-- Action Buttons -->
         <Button
+            android:id="@+id/btnReportCitizenObs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📸 Report Visible Pollution (Citizen Observation)"
+            android:backgroundTint="#7C3AED"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
+        <Button
             android:id="@+id/btnOpenPwa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -164,7 +272,7 @@
             android:backgroundTint="#0F766E"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="10dp" />
 
         <Button
             android:id="@+id/btnTestAlert"

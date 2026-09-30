@@ -18,14 +18,25 @@ class VayuWidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) {
         val timeStr = SimpleDateFormat("h:mm a", Locale.getDefault()).format(Date())
+        val prefs = context.getSharedPreferences("vayunet_prefs", Context.MODE_PRIVATE)
+        val lastLat = prefs.getFloat("last_valid_lat", 0f).toDouble()
+        val lastLon = prefs.getFloat("last_valid_lon", 0f).toDouble()
+
+        val hasValidLoc = (lastLat in -90.0..90.0 && lastLon in -180.0..180.0 &&
+                !(lastLat == 0.0 && lastLon == 0.0) &&
+                !(lastLat == 13.0827 && lastLon == 80.2707))
+
+        val initialStatus = if (hasValidLoc) "SYNCING" else "LOCATION UNAVAILABLE"
+        val initialMsg = if (hasValidLoc) "Syncing local air data..." else "Location unavailable. Open app to acquire GPS."
+
         for (id in ids) {
             updateAppWidget(
                 context,
                 manager,
                 id,
-                "LOW",
-                "Air conditions look stable.",
-                "Wind: Calm",
+                initialStatus,
+                initialMsg,
+                "Wind: --",
                 timeStr
             )
         }
@@ -73,14 +84,45 @@ class VayuWidgetProvider : AppWidgetProvider() {
         ) {
             val views = RemoteViews(context.packageName, R.layout.vayunet_widget)
 
-            val (statusText, statusColor) = when (riskLevel.uppercase()) {
-                "CRITICAL", "HIGH" -> Pair("🔴 HIGH RISK", Color.parseColor("#EF4444"))
-                "MODERATE" -> Pair("🟠 MODERATE RISK", Color.parseColor("#F97316"))
-                "NEARBY_STABLE", "NEARBY" -> Pair("🟡 NEARBY DETECTED", Color.parseColor("#EAB308"))
-                "LOW" -> Pair("🟢 AIR GOOD", Color.parseColor("#10B981"))
-                else -> Pair("🟢 AIR GOOD", Color.parseColor("#10B981"))
+            val (statusText, statusColor, bgRes) = when (riskLevel.uppercase().trim()) {
+                "CRITICAL", "HIGH", "ATTENTION" -> Triple(
+                    "🔴 ATTENTION",
+                    Color.parseColor("#EF4444"),
+                    R.drawable.widget_bg_alert
+                )
+                "MODERATE", "BE CAREFUL", "MEDIUM" -> Triple(
+                    "🟠 BE CAREFUL",
+                    Color.parseColor("#F59E0B"),
+                    R.drawable.widget_bg_warning
+                )
+                "NEARBY_STABLE", "NEARBY", "POLLUTION NEARBY" -> Triple(
+                    "🟡 POLLUTION NEARBY",
+                    Color.parseColor("#EAB308"),
+                    R.drawable.widget_bg_warning
+                )
+                "LOW", "AIR IS GOOD" -> Triple(
+                    "🟢 AIR IS GOOD",
+                    Color.parseColor("#10B981"),
+                    R.drawable.widget_bg_safe
+                )
+                "LOCATION UNAVAILABLE", "LOCATION_UNAVAILABLE", "UNAVAILABLE" -> Triple(
+                    "⚠️ NO LOCATION",
+                    Color.parseColor("#94A3B8"),
+                    R.drawable.widget_bg_safe
+                )
+                "SYNCING", "UPDATING" -> Triple(
+                    "🔄 UPDATING",
+                    Color.parseColor("#38BDF8"),
+                    R.drawable.widget_bg_safe
+                )
+                else -> Triple(
+                    "🟢 AIR IS GOOD",
+                    Color.parseColor("#10B981"),
+                    R.drawable.widget_bg_safe
+                )
             }
 
+            views.setInt(R.id.widgetRoot, "setBackgroundResource", bgRes)
             views.setTextViewText(R.id.widgetTitle, "VayuNet")
             views.setTextViewText(R.id.widgetStatus, statusText)
             views.setTextColor(R.id.widgetStatus, statusColor)

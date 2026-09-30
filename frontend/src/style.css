@@ -938,3 +938,475 @@ header {
 .hidden {
   display: none !important;
 }
+
+/* ========================================================
+   Citizen Pollution Observation Feature Styles
+======================================================== */
+
+/* Citizen Map Marker */
+.pulse-citizen-marker {
+  width: 26px;
+  height: 26px;
+  background: #9333ea;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(147, 51, 234, 0.75);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.pulse-citizen-marker::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(168, 85, 247, 0.4);
+  animation: pulse-ring-purple 1.8s infinite;
+}
+
+@keyframes pulse-ring-purple {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.legend-dot.citizen {
+  background: #a855f7;
+  border: 1px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+}
+
+/* Report Action Button */
+.btn-report-action {
+  width: 100%;
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #c026d3 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(147, 51, 234, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-report-action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(147, 51, 234, 0.5);
+}
+
+.btn-report-action:active {
+  transform: translateY(0);
+}
+
+/* Citizen Observation Modal / Card */
+.citizen-report-section {
+  background: var(--bg-surface);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.citizen-report-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.citizen-report-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #c084fc;
+  letter-spacing: 0.5px;
+}
+
+.btn-close-form {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.citizen-report-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Photo Picker Box */
+.photo-upload-box {
+  border: 2px dashed rgba(168, 85, 247, 0.4);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: center;
+  background: rgba(147, 51, 234, 0.05);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.photo-upload-box:hover {
+  border-color: #c084fc;
+  background: rgba(147, 51, 234, 0.1);
+}
+
+.upload-icon {
+  font-size: 28px;
+}
+
+.upload-prompt {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e9d5ff;
+}
+
+.upload-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Photo Preview Container */
+.photo-preview-container {
+  position: relative;
+  width: 100%;
+  max-height: 220px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.photo-preview-img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.btn-remove-photo {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* GPS Attachment Badge */
+.attached-gps-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(20, 184, 166, 0.12);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+  color: #2dd4bf;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Category Grid */
+.category-picker-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.category-chip {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.category-chip.active {
+  background: rgba(147, 51, 234, 0.25);
+  border-color: #a855f7;
+  color: #f3e8ff;
+}
+
+/* Description Textarea */
+.desc-textarea {
+  width: 100%;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 10px;
+  font-size: 12px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 54px;
+}
+
+.desc-textarea:focus {
+  outline: none;
+  border-color: #c084fc;
+}
+
+/* Submit Button */
+.btn-submit-report {
+  width: 100%;
+  background: #9333ea;
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-submit-report:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.scientific-disclaimer-small {
+  font-size: 10px;
+  color: var(--text-muted);
+  line-height: 1.35;
+  text-align: center;
+}
+
+/* AI Assessment Result Banner */
+.assessment-result-card {
+  background: rgba(147, 51, 234, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.assessment-result-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #d8b4fe;
+}
+
+.assessment-result-text {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Citizen Feed List */
+.citizen-feed-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.citizen-feed-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.citizen-feed-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #c084fc;
+}
+
+.citizen-feed-badge {
+  background: rgba(147, 51, 234, 0.2);
+  color: #d8b4fe;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.citizen-feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.citizen-feed-item {
+  background: var(--bg-surface-elevated);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.feed-item-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #000000;
+}
+
+.feed-item-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.feed-item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.feed-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feed-item-category {
+  font-size: 12px;
+  font-weight: 700;
+  color: #f3e8ff;
+}
+
+.feed-item-dist {
+  font-size: 10px;
+  color: var(--accent-teal);
+  font-weight: 600;
+}
+
+.feed-item-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+
+.feed-item-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(147, 51, 234, 0.2);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  color: #d8b4fe;
+  font-size: 9.5px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: 2px;
+}
+
+.feed-item-time {
+  font-size: 9.5px;
+  color: var(--text-muted);
+}
+
+.empty-feed-msg {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 12px 0;
+}
+
+/* Map Popup Citizen Observation */
+.citizen-popup-wrap {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  color: #0f172a;
+  max-width: 210px;
+}
+
+.obs-popup-header {
+  font-size: 12px;
+  color: #6b21a8;
+  margin-bottom: 4px;
+}
+
+.obs-popup-desc {
+  font-size: 11px;
+  color: #334155;
+  margin: 4px 0;
+  line-height: 1.3;
+}
+
+.obs-popup-assessment {
+  margin: 4px 0;
+}
+
+.obs-pill {
+  background: #f3e8ff;
+  border: 1px solid #d8b4fe;
+  color: #6b21a8;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.obs-popup-footer {
+  font-size: 9px;
+  color: #64748b;
+  margin-top: 4px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 3px;
+}
